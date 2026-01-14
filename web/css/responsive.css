@@ -1,0 +1,270 @@
+/* TEMEKANIS - Responsive Styles */
+
+/* Extra Small Devices (phones, 576px and down) */
+@media (max-width: 575.98px) {
+    .hero {
+        padding: 1rem 0;
+        text-align: center;
+    }
+
+    .hero h2 {
+        font-size: 1.75rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .features .card {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .features .card i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .features .card h5 {
+        font-size: 1.1rem;
+    }
+
+    .features .card p {
+        font-size: 0.9rem;
+    }
+
+    .footer .mt-3 {
+        text-align: center;
+    }
+
+    .footer a {
+        display: inline-block;
+        margin: 0 0.5rem;
+    }
+
+    /* Admin Panel */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggler {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
+    .table-responsive {
+        font-size: 0.8rem;
+    }
+
+    .btn-group .btn {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Small Devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .hero {
+        padding: 2rem 0;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .features .card {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Admin Panel */
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+}
+
+/* Medium Devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .hero h2 {
+        font-size: 2.25rem;
+    }
+
+    .features .row .col-md-4 {
+        margin-bottom: 2rem;
+    }
+
+    /* Admin Panel */
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Large Devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .hero h2 {
+        font-size: 2.1rem;
+    }
+
+    .hero p {
+        font-size: 1.05rem;
+    }
+
+    /* Admin Panel */
+    .sidebar {
+        width: 240px;
+    }
+
+    .main-content {
+        margin-left: 240px;
+    }
+}
+
+/* Extra Large Devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .hero h2 {
+        font-size: 2.25rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .container {
+        max-width: 1140px;
+    }
+
+    /* Admin Panel */
+    .sidebar {
+        width: 250px;
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+/* General Responsive Utilities */
+.d-none-mobile {
+    display: none !important;
+}
+
+@media (min-width: 576px) {
+    .d-none-mobile {
+        display: block !important;
+    }
+}
+
+.text-center-mobile {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .text-center-mobile {
+        text-align: left;
+    }
+}
+
+/* Card Responsive */
+@media (max-width: 767.98px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Button Responsive */
+@media (max-width: 575.98px) {
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+/* Form Responsive */
+@media (max-width: 575.98px) {
+    .form-control,
+    .form-select {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Modal Responsive */
+@media (max-width: 575.98px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .modal-content {
+        border-radius: 0;
+    }
+}
+
+/* Toast Responsive */
+@media (max-width: 575.98px) {
+    .toast-container {
+        left: 0.5rem;
+        right: 0.5rem;
+        bottom: 0.5rem;
+    }
+
+    .toast {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation Responsive */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

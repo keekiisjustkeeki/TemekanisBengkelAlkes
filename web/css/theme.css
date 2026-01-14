@@ -1,0 +1,186 @@
+/* TEMEKANIS - Theme Styles */
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --white: #ffffff;
+    --blue: #007bff;
+    --blue-light: #e3f2fd;
+    --blue-dark: #0056b3;
+}
+
+/* Light Theme */
+.light-theme {
+    --bg-color: var(--white);
+    --text-color: var(--dark-color);
+    --card-bg: var(--white);
+    --border-color: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme */
+.dark-theme {
+    --bg-color: #1a1a1a;
+    --text-color: #e9ecef;
+    --card-bg: #2d3748;
+    --border-color: #495057;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --primary-color: #4dabf7;
+    --secondary-color: #868e96;
+    --success-color: #51cf66;
+    --danger-color: #ff6b6b;
+    --warning-color: #ffd43b;
+    --info-color: #74c0fc;
+    --light-color: #495057;
+    --dark-color: #e9ecef;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.table {
+    color: var(--text-color);
+}
+
+.table th,
+.table td {
+    border-color: var(--border-color);
+}
+
+.form-control,
+.form-select {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px var(--shadow);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+}
+
+/* Modal Theme */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+}
+
+/* Navbar Theme */
+.navbar-toggler {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Footer Theme */
+.footer {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+}
+
+/* Sidebar Theme */
+.sidebar {
+    background-color: var(--card-bg);
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar .nav-link {
+    color: var(--text-color);
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* Toast Theme */
+.toast {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Skeleton Loader Theme */
+.skeleton {
+    background: linear-gradient(90deg, var(--border-color) 25%, var(--light-color) 50%, var(--border-color) 75%);
+    background-size: 200% 100%;
+}
+
+/* Responsive Theme Adjustments */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .theme-toggle i {
+        font-size: 1rem;
+    }
+}

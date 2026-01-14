@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMEKANIS - Kontak</title>
+    <meta name="description" content="Kontak PT TEMEKANIS NAYA MEDIKA - Hubungi kami untuk informasi lebih lanjut.">
+    <meta name="keywords" content="kontak TEMEKANIS, hubungi kami">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/animation.css" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="LOGO TMEKANIS.png" alt="Logo TeMekanis" class="logo me-3" style="height: 50px;">
+                    <h1 class="h4 mb-0">TeMekanis Bengkel Alkes</h1>
+                </div>
+                <nav class="d-none d-md-flex">
+                    <a href="index.html" class="text-white me-3">Dashboard</a>
+                    <a href="layanan.html" class="text-white me-3">Layanan</a>
+                    <a href="pembayaran.html" class="text-white me-3">Pembayaran</a>
+                    <a href="kontak.html" class="text-white me-3">Kontak</a>
+                    <a href="login.html" class="text-white">Login</a>
+                </nav>
+                <button class="btn btn-outline-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+            <div class="collapse d-md-none" id="navbarNav">
+                <nav class="mt-3">
+                    <a href="index.html" class="text-white d-block py-2">Dashboard</a>
+                    <a href="layanan.html" class="text-white d-block py-2">Layanan</a>
+                    <a href="pembayaran.html" class="text-white d-block py-2">Pembayaran</a>
+                    <a href="kontak.html" class="text-white d-block py-2">Kontak</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="mb-4">
+            <a href="index.html" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left me-2"></i>Kembali ke Dashboard
+            </a>
+        </div>
+        <section class="text-center mb-5">
+            <h2 class="display-4">Hubungi Kami</h2>
+            <p class="lead">Kami siap membantu Anda dengan pertanyaan atau kebutuhan apa pun.</p>
+        </section>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                    <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Alamat</h5>
+                        <p class="card-text" id="kontak-alamat">Jl. Biduri Dusun Senteluk Daye, Desa Senteluk, Batulayar, Lombok Barat, NTB</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-telephone-fill text-primary me-2"></i>Telepon</h5>
+                        <p class="card-text" id="kontak-telepon">081991303343</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-envelope-fill text-primary me-2"></i>Email</h5>
+                        <p class="card-text" id="kontak-email">temmekanis@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-whatsapp text-success me-2"></i>WhatsApp</h5>
+                        <p class="card-text">
+                            <a href="https://wa.me/6281991303343?text=Halo%20TeMekanis,%20saya%20ingin%20bertanya%20tentang%20layanan%20Anda." id="whatsapp-link" class="btn btn-success" target="_blank">
+                                <i class="bi bi-whatsapp me-2"></i>Chat WhatsApp
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-5">
+            <h3>Kirim Pesan</h3>
+            <form id="contact-form" class="mt-4">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Pesan</label>
+                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                </div>
+                <!-- Honeypot anti-spam -->
+                <div class="mb-3" style="display: none;">
+                    <label for="honeypot">Leave this field empty</label>
+                    <input type="text" class="form-control" id="honeypot" name="honeypot">
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2023 TeMekanis Bengkel Alkes. All rights reserved.</p>
+            <p>&copy; 2023 PT TEMEKANIS NAYA MEDIKA. All rights reserved.</p>
+            <div class="mt-3">
+                <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/notification.js"></script>
+</body>
+</html>

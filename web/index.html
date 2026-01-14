@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeMekanis Bengkel Alkes - Dashboard</title>
+    <meta name="description" content="Dashboard publik TeMekanis Bengkel Alkes - Toko terdepan untuk layanan perbaikan dan jual beli sparepart mekanis.">
+    <meta name="keywords" content="TeMekanis, Bengkel Alkes, perbaikan mekanis, sparepart, jual beli">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/animation.css" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="LOGO TMEKANIS.png" alt="Logo TeMekanis" class="logo me-3" style="height: 50px;">
+                    <h1 class="h4 mb-0">TeMekanis Bengkel Alkes</h1>
+                </div>
+                <nav class="d-none d-md-flex">
+                    <a href="index.html" class="text-white me-3">Dashboard</a>
+                    <a href="layanan.html" class="text-white me-3">Layanan</a>
+                    <a href="kontak.html" class="text-white">Kontak</a>
+                </nav>
+                <button class="btn btn-outline-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+            <div class="collapse d-md-none" id="navbarNav">
+                <nav class="mt-3">
+                    <a href="index.html" class="text-white d-block py-2">Dashboard</a>
+                    <a href="layanan.html" class="text-white d-block py-2">Layanan</a>
+                    <a href="kontak.html" class="text-white d-block py-2">Kontak</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Running Text -->
+    <div class="bg-info text-white py-2">
+        <div class="container">
+            <marquee behavior="scroll" direction="left" scrollamount="5">
+                Selamat datang di TeMekanis Bengkel Alkes - Layanan perbaikan alat kesehatan dan jual beli sparepart terpercaya di Pulau Lombok. Hubungi kami untuk servis berkualitas tinggi!
+            </marquee>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <section class="hero text-center mb-5">
+            <h2 class="display-4">Selamat Datang di TeMekanis Bengkel Alkes</h2>
+            <p class="lead">Toko terdepan untuk layanan perbaikan peralatan mekanis dan jual beli sparepart berkualitas tinggi.</p>
+            <a href="layanan.html" class="btn btn-primary btn-lg">Pesan Sekarang</a>
+        </section>
+
+        <section class="features row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-tools display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Peralatan Mekanis</h5>
+                        <p class="card-text">Melayani jasa perbaikan alat kesehatan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gear display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Jual Beli Sparepart</h5>
+                        <p class="card-text">Jual beli sparepart alat kesehatan berkualitas dan terpercaya.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-credit-card display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Pembayaran Mudah</h5>
+                        <p class="card-text">Berbagai metode pembayaran yang aman dan nyaman.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Gallery -->
+        <section class="mt-5">
+            <h3 class="text-center mb-4">Galeri Perbaikan Kami</h3>
+            <div class="gallery-container">
+                <div class="gallery-wrapper" id="gallery-wrapper">
+                    <div class="gallery-track" id="gallery-track">
+                        <!-- Images will be loaded dynamically as cards -->
+                    </div>
+                </div>
+                <button class="gallery-nav gallery-nav-prev" id="gallery-prev">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="gallery-nav gallery-nav-next" id="gallery-next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="mt-5">
+            <h3 class="text-center mb-4">Hubungi Kami</h3>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-geo-alt-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Alamat</h6>
+                            <p class="card-text small" id="dashboard-kontak-alamat">Jl. Biduri Dusun Senteluk Daye, Desa Senteluk, Batulayar, Lombok Barat, NTB</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-telephone-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Telepon</h6>
+                            <p class="card-text small" id="dashboard-kontak-telepon">081991303343</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-envelope-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Email</h6>
+                            <p class="card-text small" id="dashboard-kontak-email">temmekanis@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-whatsapp text-success display-4 mb-3"></i>
+                            <h6 class="card-title">WhatsApp</h6>
+                            <a href="https://wa.me/6281991303343?text=Halo%20TeMekanis,%20saya%20ingin%20bertanya%20tentang%20layanan%20Anda." id="dashboard-whatsapp-link" class="btn btn-success btn-sm" target="_blank">
+                                <i class="bi bi-whatsapp me-1"></i>Chat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Methods Section -->
+        <section class="mt-5">
+            <h3 class="text-center mb-4">Metode Pembayaran</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 payment-card text-center">
+                        <div class="card-body">
+                            <i class="bi bi-cash-coin text-success display-4 mb-3"></i>
+                            <h6 class="card-title">Tunai</h6>
+                            <p class="card-text small">Pembayaran langsung dengan uang tunai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 payment-card text-center">
+                        <div class="card-body">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 24px; font-weight: bold;">
+                                BRI
+                            </div>
+                            <h6 class="card-title">Transfer BRI</h6>
+                            <p class="card-text small">Transfer via Bank Rakyat Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 payment-card text-center">
+                        <div class="card-body">
+                            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 24px; font-weight: bold;">
+                                BSI
+                            </div>
+                            <h6 class="card-title">Transfer BSI</h6>
+                            <p class="card-text small">Transfer via Bank Syariah Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 payment-card text-center">
+                        <div class="card-body">
+                            <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 20px; font-weight: bold;">
+                                MANDIRI
+                            </div>
+                            <h6 class="card-title">Transfer Mandiri</h6>
+                            <p class="card-text small">Transfer via Bank Mandiri</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2025 TeMekanis Bengkel Alkes. PT. Temekanis Naya Medika</p>
+            <div class="mt-3">
+                <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pwa.js"></script>
+</body>
+</html>
