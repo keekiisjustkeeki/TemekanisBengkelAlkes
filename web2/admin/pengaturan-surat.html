@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Surat - Admin TeMekanis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link rel="icon" href="../LOGO TMEKANIS.png" type="image/png">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .stamp-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border: 2px dashed #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stamp-preview img {
+            max-width: 100%;
+            max-height: 130px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+<!-- SIDEBAR -->
+<nav class="col-md-3 col-lg-2 d-md-block sidebar collapse show" id="sidebar">
+<div class="position-sticky pt-3">
+
+<div class="text-center mb-4">
+<img src="../LOGO TMEKANIS.png" alt="Logo" style="height:50px;border-radius:10px;">
+<h6 class="text-white mt-2">Admin Panel</h6>
+</div>
+
+<ul class="nav flex-column">
+
+<li class="nav-item">
+<a class="nav-link" href="dashboard.html">
+<i class="bi bi-speedometer2 me-2"></i>Dashboard
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="galeri.html">
+<i class="bi bi-images me-2"></i>Kelola Galeri
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="kontak.html">
+<i class="bi bi-person-contact me-2"></i>Kelola Kontak
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="pengguna.html">
+<i class="bi bi-people me-2"></i>Kelola Pengguna
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="chat.html">
+<i class="bi bi-chat me-2"></i>Chat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link active" href="pengaturan-surat.html">
+<i class="bi bi-gear me-2"></i>Pengaturan Surat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="cetak-surat.html">
+<i class="bi bi-printer me-2"></i>Cetak Surat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="arsip-surat.html">
+<i class="bi bi-archive me-2"></i>Arsip Surat
+</a>
+</li>
+
+<li class="nav-item mt-3">
+<a class="nav-link" href="#" onclick="logout()">
+<i class="bi bi-box-arrow-right me-2"></i>Keluar
+</a>
+</li>
+
+</ul>
+</div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h4 class="fw-bold" id="page-title">Pengaturan Surat</h4>
+
+<div class="d-flex align-items-center">
+<span class="me-3">Admin: <strong id="admin-name"></strong></span>
+
+<button class="btn btn-outline-danger btn-sm" onclick="logout()">
+<i class="bi bi-box-arrow-right"></i> Keluar
+</button>
+</div>
+</div>
+
+<div id="alert-container"></div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs mb-4" id="settingsTab" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" id="kop-tab" data-bs-toggle="tab" data-bs-target="#kop" type="button">
+<i class="bi bi-file-text me-2"></i>Kop Surat
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="layout-tab" data-bs-toggle="tab" data-bs-target="#layout" type="button">
+<i class="bi bi-layout-text-window-reverse me-2"></i>Tata Letak
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="stamp-tab" data-bs-toggle="tab" data-bs-target="#stamp" type="button">
+<i class="bi bi-patch-check me-2"></i>Stempel
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button">
+<i class="bi bi-list-check me-2"></i>Item/Jasa
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="teknisi-tab" data-bs-toggle="tab" data-bs-target="#teknisi" type="button">
+<i class="bi bi-person-gear me-2"></i>Teknisi
+</button>
+</li>
+</ul>
+
+<div class="tab-content" id="settingsTabContent">
+
+<!-- KOP SURAT SETTINGS -->
+<div class="tab-pane fade show active" id="kop" role="tabpanel">
+<div class="card mb-4">
+<div class="card-header">
+<h5 class="mb-0"><i class="bi bi-file-text me-2"></i>Pengaturan Kop Surat</h5>
+</div>
+<div class="card-body">
+<form id="kop-surat-form">
+<div class="row">
+<div class="col-md-6 mb-3">
+<label class="form-label">Nama Perusahan</label>
+<input type="text" class="form-control" id="kop-nama" placeholder="Contoh: TeMekanis Bengkel Alkes">
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">Layanan</label>
+<input type="text" class="form-control" id="kop-layanan" placeholder="Contoh: LAYANAN PERBAIKAN ALAT KESEHATAN">
+</div>
+<div class="col-md-12 mb-3">
+<label class="form-label">Alamat</label>
+<textarea class="form-control" id="kop-alamat" rows="2" placeholder="Contoh: Batulayar, Lombok Barat, Nusa Tenggara Barat"></textarea>
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">No. Telepon</label>
+<input type="text" class="form-control" id="kop-telepon" placeholder="Contoh: 081991303343">
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">Email</label>
+<input type="email" class="form-control" id="kop-email" placeholder="Contoh: temmekanis@gmail.com">
+</div>
+</div>
+<button type="submit" class="btn btn-primary">
+<i class="bi bi-save me-2"></i>Simpan Kop Surat
+</button>
+</form>
+</div>
+</div>
+</div>
+
+<!-- LAYOUT SETTINGS -->
+<div class="tab-pane fade" id="layout" role="tabpanel">
+<div class="card mb-4">
+<div class="card-header">
+<h5 class="mb-0"><i class="bi bi-layout-text-window-reverse me-2"></i>Pengaturan Tata Letak Surat</h5>
+</div>
+<div class="card-body">
+<form id="layout-surat-form">
+<div class="row">
+<div class="col-md-6 mb-3">
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="show-logo" checked>
+<label class="form-check-label" for="show-logo">Tampilkan Logo</label>
+</div>
+</div>
+<div class="col-md-6 mb-3">
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="show-watermark" checked>
+<label class="form-check-label" for="show-watermark">Tampilkan Watermark di Kertas</label>
+</div>
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">Opasitas Watermark (0-100%)</label>
+<input type="range" class="form-range" id="watermark-opacity" min="0" max="1" step="0.05" value="0.1">
+<div class="form-text">Nilai: <span id="opacity-value">0.1</span> (10%)</div>
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">Ukuran Logo (px)</label>
+<input type="range" class="form-range" id="logo-size" min="40" max="120" step="5" value="60">
+<div class="form-text">Nilai: <span id="logo-size-value">60</span> px</div>
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label">Ukuran Kertas</label>
+<select class="form-select" id="paper-size">
+<option value="A4" selected>A4</option>
+<option value="Letter">Letter</option>
+<option value="F4">F4</option>
+</select>
+</div>
+</div>
+<button type="submit" class="btn btn-primary">
+<i class="bi bi-save me-2"></i>Simpan Tata Letak
+</button>
+</form>
+</div>
+</div>
+
+<!-- Preview -->
+<div class="card">
+<div class="card-header">
+<h5 class="mb-0"><i class="bi bi-eye me-2"></i>Pratinjau</h5>
+</div>
+<div class="card-body text-center" style="overflow: auto; padding: 20px;">
+<div class="surat-preview" style="width: 210mm; min-height: 297mm; margin: 0 auto; border: 1px solid #ccc; background: white; padding: 20mm; position: relative; box-sizing: border-box; font-family: 'Times New Roman', serif; font-size: 12px; transform-origin: top center; transform: scale(0.7); margin-bottom: -90mm;">
+<div style="display: flex; align-items: flex-start; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px;">
+<img src="../LOGO TMEKANIS.png" style="width: 60px; height: 60px; margin-right: 15px;" id="preview-logo">
+<div style="text-align: center; flex: 1;">
+<div style="font-weight: bold; font-size: 18px;" id="preview-nama">TeMekanis Bengkel Alkes</div>
+<div style="font-weight: bold; font-size: 14px; margin: 5px 0;" id="preview-layanan">LAYANAN PERBAIKAN ALAT KESEHATAN</div>
+<div style="font-size: 10px; color: #555; line-height: 1.4;" id="preview-alamat">Batulayar, Lombok Barat, Nusa Tenggara Barat<br>No. Telp: 081991303343 | Email: temmekanis@gmail.com</div>
+</div>
+</div>
+<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; pointer-events: none;" id="preview-watermark">
+<img src="../LOGO TMEKANIS.png" style="width: 300px;">
+</div>
+<div style="position: relative; z-index: 1;">
+<div style="margin: 15px 0;">
+<div><strong>Nama Pekerjaan</strong> : Perbaikan Alat Kesehatan</div>
+<div><strong>Nama Pelanggan</strong> : Contoh Pelanggan</div>
+<div><strong>Teknisi</strong> : John Doe</div>
+</div>
+<div style="margin: 15px 0; line-height: 1.6; text-align: justify;">
+<p>Sehubungan dengan kegiatan perbaikan pada tanggal tersebut, ditemukan kerusakan pada beberapa komponen alat kesehatan.</p>
+<p>Berdasarkan hasil pemeriksaan terdapat beberapa komponen yang perlu dilakukan pergantian dan maintenance. Berikut rinciannya :</p>
+</div>
+<table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+<thead>
+<tr style="background: #f0f0f0;">
+<th style="border: 1px solid #000; padding: 5px;">No</th>
+<th style="border: 1px solid #000; padding: 5px;">Nama Sparepart</th>
+<th style="border: 1px solid #000; padding: 5px;">Kondisi</th>
+<th style="border: 1px solid #000; padding: 5px;">Tindakan</th>
+<th style="border: 1px solid #000; padding: 5px;">Qty</th>
+<th style="border: 1px solid #000; padding: 5px;">Harga</th>
+<th style="border: 1px solid #000; padding: 5px;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid #000; padding: 5px; text-align: center;">1</td>
+<td style="border: 1px solid #000; padding: 5px;">Contoh Sparepart</td>
+<td style="border: 1px solid #000; padding: 5px;">Baru</td>
+<td style="border: 1px solid #000; padding: 5px;">Pemasangan</td>
+<td style="border: 1px solid #000; padding: 5px; text-align: center;">1</td>
+<td style="border: 1px solid #000; padding: 5px; text-align: right;">100.000</td>
+<td style="border: 1px solid #000; padding: 5px; text-align: right;">100.000</td>
+</tr>
+</tbody>
+</table>
+<div style="margin-top: 15px; text-align: right; font-weight: bold; font-size: 14px;">
+Total : Rp 100.000
+</div>
+<div style="margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end;">
+<div style="text-align: left;">
+<div style="margin-bottom: 50px;">Hormat kami,</div>
+<div style="font-weight: bold;">John Doe</div>
+</div>
+<div style="text-align: right;">
+<img src="" id="preview-qr" style="width: 70px; display: none;">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- STAMP SETTINGS -->
+<div class="tab-pane fade" id="stamp" role="tabpanel">
+<div class="card mb-4">
+<div class="card-header">
+<h5 class="mb-0"><i class="bi bi-patch-check me-2"></i>Pengaturan Stempel</h5>
+</div>
+<div class="card-body">
+<div class="row">
+<div class="col-md-12 mb-3">
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="show-stamp" checked onchange="saveStampSettings()">
+<label class="form-check-label" for="show-stamp">Tampilkan Stempel di Surat</label>
+</div>
+</div>
+<div class="col-md-6">
+<div class="mb-3">
+<label class="form-label">Upload Stempel</label>
+<input type="file" class="form-control" id="stamp-upload" accept="image/*">
+<p class="text-muted small">Format: PNG, JPG (disarankan background transparan)</p>
+</div>
+<button type="button" class="btn btn-primary" onclick="uploadStamp()">
+<i class="bi bi-upload me-2"></i>Simpan Stempel
+</button>
+<button type="button" class="btn btn-danger ms-2" onclick="deleteStamp()">
+<i class="bi bi-trash me-2"></i>Hapus Stempel
+</button>
+</div>
+<div class="col-md-6">
+<label class="form-label">Pratinjau Stempel</label>
+<div class="stamp-preview" id="stamp-preview">
+<img src="" id="stamp-img" style="display: none;">
+<span id="stamp-placeholder" class="text-muted">Belum ada stempel</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- DEFAULT LAYANAN -->
+<div class="tab-pane fade" id="items" role="tabpanel">
+<div class="card mb-4">
+<div class="card-header d-flex justify-content-between align-items-center">
+<h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Default Item/Jasa Service</h5>
+<button class="btn btn-success btn-sm" onclick="showAddItem()">
+<i class="bi bi-plus-lg"></i> Tambah Item
+</button>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-hover" id="items-table">
+<thead>
+<tr>
+<th>Nama Item/Jasa</th>
+<th>Harga Default</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TEKNISI -->
+<div class="tab-pane fade" id="teknisi" role="tabpanel">
+<div class="card">
+<div class="card-header d-flex justify-content-between align-items-center">
+<h5 class="mb-0"><i class="bi bi-person-gear me-2"></i>Daftar Teknisi</h5>
+<button class="btn btn-success btn-sm" onclick="showAddTeknisi()">
+<i class="bi bi-plus-lg"></i> Tambah Teknisi
+</button>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-hover" id="teknisi-table">
+<thead>
+<tr>
+<th>Nama Teknisi</th>
+<th>Spesialis</th>
+<th>Kontak</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+</div>
+
+</div>
+
+</main>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/surat/surat.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const user = getCurrentUser();
+    if (!user || user.role !== 'admin') {
+        window.location.href = '../login.html';
+        return;
+    }
+    document.getElementById('admin-name').textContent = user.username;
+    
+    loadKopSurat();
+    loadLayoutSettings();
+    loadStamp();
+    loadItems();
+    loadTeknisi();
+    
+    // Save kop surat
+    document.getElementById('kop-surat-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Ambil nilai yang sudah tersimpan sebelumnya
+        const existingKop = getKopSurat();
+        
+        // Ambil nilai dari form
+        const newNama = document.getElementById('kop-nama').value;
+        const newLayanan = document.getElementById('kop-layanan').value;
+        const newAlamat = document.getElementById('kop-alamat').value;
+        const newTelepon = document.getElementById('kop-telepon').value;
+        const newEmail = document.getElementById('kop-email').value;
+        
+        // Simpan hanya jika ada nilai baru, kalau kosong tetap pakai nilai lama
+        const kop = {
+            nama_perusahaan: newNama || existingKop.nama_perusahaan,
+            layanan: newLayanan || existingKop.layanan,
+            alamat: newAlamat || existingKop.alamat,
+            telepon: newTelepon || existingKop.telepon,
+            email: newEmail || existingKop.email
+        };
+        saveKopSurat(kop);
+        showAlert('Pengaturan kop surat berhasil disimpan!', 'success');
+        updatePreview();
+    });
+    
+    // Save layout
+    document.getElementById('layout-surat-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const layout = {
+            showLogo: document.getElementById('show-logo').checked,
+            showWatermark: document.getElementById('show-watermark').checked,
+            watermarkOpacity: parseFloat(document.getElementById('watermark-opacity').value),
+            logoSize: parseInt(document.getElementById('logo-size').value),
+            paperSize: document.getElementById('paper-size').value
+        };
+        saveLayoutSettings(layout);
+        showAlert('Pengaturan tata letak berhasil disimpan!', 'success');
+        updatePreview();
+    });
+    
+    // Opacity slider
+    document.getElementById('watermark-opacity').addEventListener('input', function(e) {
+        document.getElementById('opacity-value').textContent = e.target.value;
+        document.getElementById('preview-watermark').style.opacity = e.target.value;
+    });
+    
+    // Logo size slider
+    document.getElementById('logo-size').addEventListener('input', function(e) {
+        document.getElementById('logo-size-value').textContent = e.target.value;
+        document.getElementById('preview-logo').style.width = e.target.value + 'px';
+        document.getElementById('preview-logo').style.height = e.target.value + 'px';
+    });
+});
+
+function loadKopSurat() {
+    const kop = getKopSurat();
+    // Form langsung terisi dengan nilai default
+    document.getElementById('kop-nama').value = kop.nama_perusahaan || '';
+    document.getElementById('kop-layanan').value = kop.layanan || '';
+    document.getElementById('kop-alamat').value = kop.alamat || '';
+    document.getElementById('kop-telepon').value = kop.telepon || '';
+    document.getElementById('kop-email').value = kop.email || '';
+    updatePreview();
+}
+
+function loadLayoutSettings() {
+    const layout = getLayoutSettings();
+    document.getElementById('show-logo').checked = layout.showLogo !== false;
+    document.getElementById('show-watermark').checked = layout.showWatermark !== false;
+    document.getElementById('watermark-opacity').value = layout.watermarkOpacity || 0.1;
+    document.getElementById('opacity-value').textContent = layout.watermarkOpacity || 0.1;
+    document.getElementById('paper-size').value = layout.paperSize || 'A4';
+    updatePreview();
+}
+
+function loadStamp() {
+    const stamp = getStamp();
+    const img = document.getElementById('stamp-img');
+    const placeholder = document.getElementById('stamp-placeholder');
+    const showStamp = document.getElementById('show-stamp');
+    
+    if (stamp) {
+        img.src = stamp;
+        img.style.display = 'inline-block';
+        placeholder.style.display = 'none';
+    } else {
+        img.style.display = 'none';
+        placeholder.style.display = 'inline-block';
+    }
+    
+    // Load show/hide stamp setting
+    const settings = JSON.parse(localStorage.getItem('temeknis_stamp_settings') || '{"showStamp":true}');
+    showStamp.checked = settings.showStamp;
+}
+
+function saveStampSettings() {
+    const showStamp = document.getElementById('show-stamp').checked;
+    const settings = { showStamp: showStamp };
+    localStorage.setItem('temeknis_stamp_settings', JSON.stringify(settings));
+    showAlert('Pengaturan stempel berhasil disimpan!', 'success');
+}
+
+function uploadStamp() {
+    const input = document.getElementById('stamp-upload');
+    if (!input.files || !input.files[0]) {
+        showAlert('Pilih file stempel terlebih dahulu!', 'warning');
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        saveStamp(e.target.result);
+        loadStamp();
+        showAlert('Stempel berhasil disimpan!', 'success');
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function deleteStamp() {
+    if (!confirm('Hapus stempel?')) return;
+    
+    localStorage.removeItem('temeknis_stamp');
+    loadStamp();
+    showAlert('Stempel dihapus!', 'success');
+}
+
+function updatePreview() {
+    const kop = getKopSurat();
+    const layout = getLayoutSettings();
+    
+    // Update preview elements
+    document.getElementById('preview-nama').textContent = kop.nama_perusahaan || 'Nama Perusahaan';
+    document.getElementById('preview-layanan').textContent = kop.layanan || 'LAYANAN PERBAIKAN ALAT KESEHATAN';
+    document.getElementById('preview-alamat').textContent = kop.alamat ? `${kop.alamat} No.Telp ${kop.telepon} email: ${kop.email}` : 'Alamat...';
+    
+    // Logo
+    document.getElementById('preview-logo').style.display = layout.showLogo !== false ? 'inline-block' : 'none';
+    
+    // Watermark
+    document.getElementById('preview-watermark').style.display = layout.showWatermark ? 'block' : 'none';
+    document.getElementById('preview-watermark').style.opacity = layout.watermarkOpacity || 0.1;
+}
+
+// Items functions
+function loadItems() {
+    const items = getLayanan();
+    const tbody = document.querySelector('#items-table tbody');
+    if (!tbody) return;
+    
+    if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada item</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = items.map(item => `
+        <tr>
+            <td>${item.nama}</td>
+            <td>${formatRupiah(item.harga)}</td>
+            <td>
+                <button class="btn btn-sm btn-danger" onclick="deleteItem(${item.id})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function showAddItem() {
+    const nama = prompt('Nama Item/Jasa:');
+    if (!nama) return;
+    
+    const harga = prompt('Harga (angka saja):');
+    if (!harga) return;
+    
+    const items = getLayanan();
+    items.push({
+        id: Date.now(),
+        nama: nama,
+        harga: parseInt(harga)
+    });
+    localStorage.setItem('temeknis_layanan', JSON.stringify(items));
+    loadItems();
+    showAlert('Item berhasil ditambahkan!', 'success');
+}
+
+function deleteItem(id) {
+    if (!confirm('Hapus item ini?')) return;
+    
+    let items = getLayanan();
+    items = items.filter(i => i.id !== id);
+    localStorage.setItem('temeknis_layanan', JSON.stringify(items));
+    loadItems();
+    showAlert('Item dihapus!', 'success');
+}
+
+// Teknisi functions
+function getTeknisi() {
+    return JSON.parse(localStorage.getItem('temeknis_teknisi') || '[]');
+}
+
+function loadTeknisi() {
+    const teknisi = getTeknisi();
+    const tbody = document.querySelector('#teknisi-table tbody');
+    if (!tbody) return;
+    
+    if (teknisi.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">Belum ada teknisi</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = teknisi.map(t => `
+        <tr>
+            <td>${t.nama}</td>
+            <td>${t.spesialis || '-'}</td>
+            <td>${t.kontak || '-'}</td>
+            <td>
+                <button class="btn btn-sm btn-danger" onclick="deleteTeknisi('${t.id}')">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function showAddTeknisi() {
+    const nama = prompt('Nama Teknisi:');
+    if (!nama) return;
+    
+    const spesialis = prompt('Spesialis:');
+    const kontak = prompt('Kontak:');
+    
+    const teknisi = getTeknisi();
+    teknisi.push({
+        id: 'tek' + Date.now(),
+        nama: nama,
+        spesialis: spesialis,
+        kontak: kontak
+    });
+    
+    localStorage.setItem('temeknis_teknisi', JSON.stringify(teknisi));
+    loadTeknisi();
+    showAlert('Teknisi berhasil ditambahkan!', 'success');
+}
+
+function deleteTeknisi(id) {
+    if (!confirm('Hapus teknisi ini?')) return;
+    
+    let teknisi = getTeknisi();
+    teknisi = teknisi.filter(t => t.id !== id);
+    localStorage.setItem('temeknis_teknisi', JSON.stringify(teknisi));
+    loadTeknisi();
+    showAlert('Teknisi dihapus!', 'success');
+}
+
+function showAlert(message, type) {
+    document.getElementById('alert-container').innerHTML = 
+        `<div class="alert alert-${type} alert-dismissible fade show">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>`;
+    setTimeout(() => {
+        document.getElementById('alert-container').innerHTML = '';
+    }, 5000);
+}
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../login.html';
+}
+</script>
+
+</body>
+</html>
+

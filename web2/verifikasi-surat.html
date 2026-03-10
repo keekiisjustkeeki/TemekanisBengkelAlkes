@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Surat - TeMekanis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="icon" href="LOGO TMEKANIS.png" type="image/png">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .verify-card {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .verify-header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .verify-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        .status-valid {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        .status-invalid {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        .surat-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 20px 20px;
+            font-family: 'Times New Roman', serif;
+            font-size: 12px;
+        }
+        
+        /* Header - Logo kiri, text tengah */
+        .header { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px; }
+        .logo { width: 60px; height: 60px; margin-right: 15px; }
+        .header-text { text-align: center; flex: 1; }
+        .header-text h1 { font-size: 18px; font-weight: bold; margin-bottom: 3px; }
+        .header-text .layanan { font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .header-text p { font-size: 10px; margin: 2px 0; color: #555; }
+        
+        .info-row { margin: 5px 0; }
+        .info-label { font-weight: bold; display: inline-block; min-width: 130px; }
+        
+        .description { margin: 15px 0; font-size: 11px; line-height: 1.6; text-align: justify; }
+        
+        .surat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10px;
+        }
+        .surat-table th, .surat-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .surat-table th { background: #f0f0f0; text-align: center; }
+        
+        .total-row {
+            font-weight: bold;
+            text-align: right;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        /* Footer - kiri: Hormat kami */
+        .footer { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .footer-left { text-align: left; }
+        .footer-right { text-align: right; }
+        .hormat-kami { margin-bottom: 50px; font-size: 12px; }
+        .ttd-name { font-weight: bold; }
+        .stamp-img { width: 80px; margin-bottom: 10px; }
+        
+        .qr-info {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center mb-4">
+        <img src="LOGO TMEKANIS.png" alt="Logo" style="width: 60px; border-radius: 10px;">
+    </div>
+
+    <div class="card verify-card" id="verify-card">
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="index.html" class="btn btn-light">
+            <i class="bi bi-house me-2"></i>Kembali ke Beranda
+        </a>
+    </div>
+</div>
+
+<script src="js/surat/surat.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const suratId = urlParams.get('id');
+    const hash = urlParams.get('hash');
+    
+    const card = document.getElementById('verify-card');
+    
+    if (!suratId) {
+        card.innerHTML = `
+            <div class="verify-header status-invalid">
+                <i class="bi bi-exclamation-triangle display-1"></i>
+                <h3 class="mt-3">Parameter Tidak Lengkap</h3>
+                <p class="mb-0">Silakan scan QR Code dengan benar</p>
+            </div>
+            <div class="surat-content text-center">
+                <p>Link verifikasi tidak valid</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const result = verifySurat(suratId, hash);
+    
+    if (result.valid) {
+        const surat = result.surat;
+        const kop = getKopSurat();
+        const items = JSON.parse(surat.items || '[]');
+        let total = 0;
+        items.forEach(item => {
+            total += item.jumlah * item.harga;
+        });
+        
+        const teknisi = surat.teknisi || '-';
+        const tanggal = new Date(surat.created_at).toLocaleDateString('id-ID', {
+            day: 'numeric', month: 'long', year: 'numeric'
+        });
+        
+        const grandTotal = total + (surat.jasa_service_harga || 0);
+        
+        card.innerHTML = `
+            <div class="verify-header status-valid">
+                <i class="bi bi-check-circle display-1"></i>
+                <h3 class="mt-3">SURAT ASLI</h3>
+                <p class="mb-0">Dokumen ini telah diverifikasi dan valid</p>
+            </div>
+            <div class="surat-content">
+                <div class="header">
+                    <img src="LOGO TMEKANIS.png" alt="Logo" class="logo">
+                    <div class="header-text">
+                        <h1>${kop.nama_perusahaan}</h1>
+                        <div class="layanan">${kop.layanan || 'LAYANAN PERBAIKAN ALAT KESEHATAN'}</div>
+                        <p>${kop.alamat} No.Telp ${kop.telepon} email: ${kop.email}</p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="info-row"><span class="info-label">Nama Pekerjaan</span> : ${surat.jenis_layanan || '-'}</div>
+                <div class="info-row"><span class="info-label">Nama Pelanggan</span> : ${surat.nama_pelanggan}</div>
+                <div class="info-row"><span class="info-label">Nomor Surat</span> : ${surat.nomor}</div>
+                <div class="info-row"><span class="info-label">Tanggal</span> : ${tanggal}</div>
+                <div class="info-row"><span class="info-label">Teknisi</span> : ${teknisi}</div>
+                
+                <div class="description">
+                    <p>Sehubungan dengan kegiatan perbaikan (${surat.jenis_layanan || '-'}) pada (${tanggal}), ditemukan</p>
+                    <p>${surat.desripsi || 'Kerusakan pada beberapa komponen alat kesehatan.'}</p>
+                    <p>Berdasarkan hasil pemeriksaan terdapat beberapa komponen yang perlu dilakukan pergantian dan maintenance. Berikut rinciannya :</p>
+                </div>
+                
+                <table class="surat-table">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">No</th>
+                            <th>Nama Sparepart</th>
+                            <th style="width:60px">Kondisi</th>
+                            <th style="width:60px">Tindakan</th>
+                            <th style="width:30px">Qty</th>
+                            <th style="width:60px">Harga</th>
+                            <th style="width:60px">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${items.map((item, i) => `
+                        <tr>
+                            <td style="text-align:center">${i + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.kondisi || 'Baru'}</td>
+                            <td>${item.tindakan || 'Pemasangan'}</td>
+                            <td style="text-align:center">${item.jumlah}</td>
+                            <td style="text-align:right">${formatRupiah(item.harga)}</td>
+                            <td style="text-align:right">${formatRupiah(item.jumlah * item.harga)}</td>
+                        </tr>
+                        `).join('')}
+                        ${surat.jasa_service ? `
+                        <tr>
+                            <td style="text-align:center">${items.length + 1}</td>
+                            <td>${surat.jasa_service}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td style="text-align:center">-</td>
+                            <td style="text-align:right">-</td>
+                            <td style="text-align:right">${formatRupiah(surat.jasa_service_harga || 0)}</td>
+                        </tr>
+                        ` : ''}
+                    </tbody>
+                </table>
+                
+                <div class="total-row">
+                    Total : ${formatRupiah(grandTotal)}
+                </div>
+                
+                <div class="footer">
+                    <div class="footer-left">
+                        <div class="hormat-kami">Hormat kami,</div>
+                        <div class="ttd-name">${teknisi}</div>
+                    </div>
+                </div>
+                
+                <div class="qr-info">
+                    <p class="mb-1"><strong>ID Dokumen:</strong> ${surat.id}</p>
+                    <p class="mb-0"><strong>Dibuat:</strong> ${new Date(surat.created_at).toLocaleString('id-ID')}</p>
+                </div>
+            </div>
+        `;
+    } else {
+        card.innerHTML = `
+            <div class="verify-header status-invalid">
+                <i class="bi bi-x-circle display-1"></i>
+                <h3 class="mt-3">SURAT TIDAK VALID</h3>
+                <p class="mb-0">Dokumen ini tidak dapat diverifikasi</p>
+            </div>
+            <div class="surat-content text-center">
+                <p>${result.message}</p>
+                <p class="text-muted">Surat mungkin telah dimanipulasi atau tidak terdaftar dalam sistem.</p>
+                <hr>
+                <p class="mb-0">Silakan hubungi TeMekanis untuk konfirmasi lebih lanjut.</p>
+            </div>
+        `;
+    }
+});
+</script>
+
+</body>
+</html>
+

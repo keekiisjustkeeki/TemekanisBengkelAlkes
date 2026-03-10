@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeMekanis Bengkel Alkes - Dashboard</title>
+    <meta name="description" content="TeMekanis Bengkel Alkes - Layanan perbaikan alat kesehatan dan jual beli sparepart di Pulau Lombok.">
+    <meta name="keywords" content="TeMekanis, Bengkel Alkes, alat kesehatan, perbaikan, sparepart, Lombok">
+    <meta property="og:title" content="TeMekanis Bengkel Alkes">
+    <meta property="og:description" content="Layanan perbaikan alat kesehatan dan sparepart di Lombok">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/animation.css" rel="stylesheet">
+    <link rel="icon" href="LOGO TMEKANIS.png" type="image/png">
+    <style>
+        #game-container {
+            max-width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #dee2e6;
+        }
+        #game-container .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.5);
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="LOGO TMEKANIS.png" alt="Logo TeMekanis" class="logo me-3" style="height: 50px;">
+                    <h1 class="h4 mb-0">TeMekanis Bengkel Alkes</h1>
+                </div>
+                <div class="d-flex align-items-center">
+                    <nav class="d-none d-md-flex align-items-center">
+                        <a href="index.html" class="text-white me-3">Dashboard</a>
+                        <a href="layanan.html" class="text-white me-3">Layanan</a>
+                        <a href="kontak.html" class="text-white me-3">Kontak</a>
+                        <a href="login.html" class="btn btn-warning btn-sm ms-2"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+                    </nav>
+                    <button class="btn btn-outline-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse d-md-none" id="navbarNav">
+                <nav class="mt-3">
+                    <a href="index.html" class="text-white d-block py-2">Dashboard</a>
+                    <a href="layanan.html" class="text-white d-block py-2">Layanan</a>
+                    <a href="kontak.html" class="text-white d-block py-2">Kontak</a>
+                    <a href="login.html" class="btn btn-warning btn-sm d-block mt-2">Login</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Running Text -->
+    <div class="bg-info text-white py-2">
+        <div class="container">
+            <marquee behavior="scroll" direction="left" scrollamount="5">
+                Selamat datang di TeMekanis Bengkel Alkes - Layanan perbaikan alat kesehatan dan jual beli sparepart di Pulau Lombok. Hubungi kami untuk servis!
+            </marquee>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Hero Section -->
+        <section class="hero text-center mb-5">
+            <div class="container position-relative">
+                <h2 class="display-4 fw-bold">Selamat Datang di TeMekanis Bengkel Alkes</h2>
+                <p class="lead mb-4">Toko layanan perbaikan peralatan mekanis dan jual beli sparepart terbaik di Lombok</p>
+                <a href="layanan.html" class="btn btn-light btn-lg fw-bold px-5 py-3">Pesan Sekarang</a>
+                <div class="mt-4">
+                    <span class="badge bg-warning text-dark px-4 py-3 fw-bold">
+                        <i class="bi bi-people-fill me-2"></i>
+                        Pengunjung: <span id="visitor-count">0</span>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-body text-center py-5">
+                            <i class="bi bi-tools display-1 mb-4 d-block"></i>
+                            <h4 class="card-title fw-bold">Peralatan Mekanis</h5>
+                            <p class="card-text text-muted">Melayani jasa perbaikan alat kesehatan dengan teknisi berpengalaman.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-body text-center py-5">
+                            <i class="bi bi-gear display-1 mb-4 d-block"></i>
+                            <h4 class="card-title fw-bold">Jual Beli Sparepart</h5>
+                            <p class="card-text text-muted">Jual beli sparepart alat kesehatan berkualitas tinggi.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-body text-center py-5">
+                            <i class="bi bi-credit-card display-1 mb-4 d-block"></i>
+                            <h4 class="card-title fw-bold">Pembayaran Mudah</h5>
+                            <p class="card-text text-muted">Berbagai metode pembayaran yang aman dan terpercaya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Gallery -->
+        <section class="gallery-section py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold display-5">Galeri Perbaikan Kami</h2>
+                    <p class="text-muted">Dokumentasi hasil perbaikan alat kesehatan oleh tim teknisi kami</p>
+                </div>
+                <div class="gallery-wrapper position-relative">
+                    <div class="gallery-container">
+                        <div class="gallery-track" id="gallery-track"></div>
+                    </div>
+                    <button class="gallery-nav gallery-nav-prev" id="gallery-prev"><i class="bi bi-chevron-left"></i></button>
+                    <button class="gallery-nav gallery-nav-next" id="gallery-next"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mini Game 1: Teknisi Klik -->
+        <section class="mt-5" id="game-section">
+            <h3 class="text-center mb-4">Mini Game: Teknisi Klik</h3>
+            <p class="text-center">Klik target secepat mungkin dalam 30 detik!</p>
+            <div id="game-container"></div>
+            <div class="text-center mt-3">
+                <p>Skor: <strong id="game-score">0</strong> | Waktu: <strong id="game-timer">30</strong> detik</p>
+                <button class="btn btn-primary" id="game-start-btn" onclick="startGame1()">Mulai Game</button>
+                <div id="game-result" class="mt-3"></div>
+            </div>
+        </section>
+
+        <!-- Mini Game 2: Pasang Sparepart -->
+        <section class="mt-5" id="game2-section">
+            <h3 class="text-center mb-4">Mini Game: Tebak Sparepart</h3>
+            <p class="text-center">Pilih sparepart yang tepat! (75 detik, 20 pertanyaan)</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div id="game2-question" class="mb-3" style="font-size: 1.2rem; font-weight: bold;">Alat: ?</div>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap" id="game2-options"></div>
+                            <p>Skor: <strong id="game2-score">0</strong> | Nyawa: <strong id="game2-lives">3</strong> | Waktu: <strong id="game2-timer">75</strong> detik</p>
+                            <button class="btn btn-success" id="game2-start-btn" onclick="startGame2()">Mulai Game</button>
+                            <div id="game2-result" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="mt-5">
+            <h3 class="text-center mb-4">Hubungi Kami</h3>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-geo-alt-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Alamat</h6>
+                            <p class="card-text small">Jl. Biduri Senteluk Daye, Desa Senteluk, Batulayar, Lombok Barat, NTB</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-telephone-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Telepon</h6>
+                            <p class="card-text small">081991303343</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-envelope-fill text-primary display-4 mb-3"></i>
+                            <h6 class="card-title">Email</h6>
+                            <p class="card-text small">temmekanis@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-whatsapp text-success display-4 mb-3"></i>
+                            <h6 class="card-title">WhatsApp</h6>
+                            <a href="https://wa.me/6281991303343?text=Halo%20TeMekanis" class="btn btn-success btn-sm" target="_blank">
+                                <i class="bi bi-whatsapp me-1"></i>Chat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Theme Toggle & WhatsApp -->
+    <div class="fixed-buttons">
+        <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">
+            <i class="bi bi-moon-fill"></i>
+        </button>
+        <a href="https://wa.me/6281991303343?text=Halo%20TeMekanis" class="floating-whatsapp" target="_blank" title="Chat WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2025 TeMekanis Bengkel Alkes. PT. Temekanis Naya Medika</p>
+            <div class="mt-3">
+                <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                <a href="https://instagram.com/temmekanis" class="text-white" target="_blank"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // ==================== GAME 1: TEKNISI KLIK ====================
+        var game1Score = 0;
+        var game1Time = 30;
+        var game1Playing = false;
+        var game1Timer = null;
+        var game1Container = document.getElementById('game-container');
+        var game1Btn = document.getElementById('game-start-btn');
+
+        function spawnTarget() {
+            if (!game1Playing || !game1Container) return;
+            
+            // Remove existing target
+            var existing = game1Container.querySelector('.target');
+            if (existing) existing.remove();
+            
+            // Create new target
+            var target = document.createElement('div');
+            target.className = 'target';
+            target.innerHTML = '<i class="bi bi-wrench"></i>';
+            
+            // Random position
+            var maxX = game1Container.clientWidth - 50;
+            var maxY = game1Container.clientHeight - 50;
+            target.style.left = Math.random() * maxX + 'px';
+            target.style.top = Math.random() * maxY + 'px';
+            
+            // Click handler
+            target.onclick = function() {
+                game1Score++;
+                document.getElementById('game-score').textContent = game1Score;
+                target.remove();
+                spawnTarget();
+            };
+            
+            game1Container.appendChild(target);
+            
+            // Auto remove after 2 seconds
+            setTimeout(function() {
+                if (target.parentNode && game1Playing) {
+                    target.remove();
+                    spawnTarget();
+                }
+            }, 2000);
+        }
+
+        function startGame1() {
+            if (game1Playing) return;
+            game1Playing = true;
+            game1Score = 0;
+            game1Time = 30;
+            
+            document.getElementById('game-score').textContent = game1Score;
+            document.getElementById('game-timer').textContent = game1Time;
+            document.getElementById('game-result').innerHTML = '';
+            game1Btn.disabled = true;
+            game1Btn.textContent = 'Bermain...';
+            
+            // Start timer
+            if (game1Timer) clearInterval(game1Timer);
+            game1Timer = setInterval(function() {
+                game1Time--;
+                document.getElementById('game-timer').textContent = game1Time;
+                if (game1Time <= 0) {
+                    endGame1();
+                }
+            }, 1000);
+            
+            spawnTarget();
+        }
+
+        function endGame1() {
+            game1Playing = false;
+            if (game1Timer) clearInterval(game1Timer);
+            
+            var target = game1Container.querySelector('.target');
+            if (target) target.remove();
+            
+            document.getElementById('game-result').innerHTML = 
+                '<div class="bg-info text-white p-3 rounded">' +
+                '<h5>Permainan Selesai!</h5>' +
+                '<p>Skor: <strong>' + game1Score + '</strong></p>' +
+                '<button class="btn btn-warning" onclick="startGame1()">Main Lagi</button>' +
+                '</div>';
+            game1Btn.disabled = false;
+            game1Btn.textContent = 'Mulai Lagi';
+        }
+
+        // ==================== GAME 2: TEBAK SPAREPART ====================
+        var game2Score = 0;
+        var game2Lives = 3;
+        var game2Time = 75;
+        var game2Playing = false;
+        var game2Timer = null;
+        var game2Questions = [];
+        
+        var allQuestions = [
+            { alat: 'Pompa Infus', sparepart: 'Selang Infus', options: ['Selang Infus', 'Masker Oksigen', 'Kateter', 'Traheostomi'] },
+            { alat: 'Alat Ukur Tekanan Darah', sparepart: 'Manometer', options: ['Manometer', 'Stetoskop', 'Termometer', 'Sphygmomanometer'] },
+            { alat: 'Nebulizer', sparepart: 'Nebulizer Kit', options: ['Nebulizer Kit', 'Oximeter', 'Ventilator', 'CPAP'] },
+            { alat: 'ECG Monitor', sparepart: 'Elektroda', options: ['Elektroda', 'Sensor Suhu', 'Baterai', 'Kabel ECG'] },
+            { alat: 'Oxymeter', sparepart: 'Sensor', options: ['Sensor', 'Display', 'Switch', 'Baterai'] },
+            { alat: 'Ventilator', sparepart: 'Circuit', options: ['Circuit', 'Filter', 'Masker', 'Selang'] },
+            { alat: 'Infusion Pump', sparepart: 'Syringe', options: ['Syringe', 'Tube', 'Klep', 'Baterai'] },
+            { alat: 'Suction Machine', sparepart: 'Container', options: ['Container', 'Tubing', 'Kateter', 'Filter'] },
+            { alat: 'Patient Monitor', sparepart: 'Spo2 Sensor', options: ['Spo2 Sensor', 'EKG Cable', 'NIBP Cuff', 'Temp Probe'] },
+            { alat: 'Defibrillator', sparepart: 'Paddle', options: ['Paddle', 'Elektroda', 'Baterai', 'Kabel'] },
+            { alat: 'X-Ray Machine', sparepart: 'Film', options: ['Film', 'Kassete', 'Grid', 'Tube'] },
+            { alat: 'Ultrasound', sparepart: 'Probe', options: ['Probe', 'Gel', 'Kabel', 'Monitor'] },
+            { alat: 'Autoclave', sparepart: 'Sealing Ring', options: ['Sealing Ring', 'Tray', 'Indicator', 'Sterilisator'] },
+            { alat: 'ECG 12 Lead', sparepart: 'Kabel Limb', options: ['Kabel Limb', 'Elektroda', 'Kabel Chest', 'Connector'] },
+            { alat: 'Oxygen Concentrator', sparepart: 'Sieve', options: ['Sieve', 'Filter', 'Tubing', 'Humidifier'] },
+            { alat: 'Ambu Bag', sparepart: 'Valve', options: ['Valve', 'Masker', 'Bag', 'Connector'] },
+            { alat: 'Glucometer', sparepart: 'Strip', options: ['Strip', 'Lancet', 'Baterai', 'Display'] },
+            { alat: 'Thermometer Digital', sparepart: 'Probe Cover', options: ['Probe Cover', 'Baterai', 'Sensor', 'Display'] },
+            { alat: 'Pulse Oximeter', sparepart: 'Probe', options: ['Probe', 'Strap', 'Baterai', 'Display'] },
+            { alat: 'Inkubator', sparepart: 'Mattress', options: ['Mattress', 'Sensor Suhu', 'Humidifier', 'Lamp'] }
+        ];
+
+        function shuffleArray(array) {
+            var arr = array.slice();
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function showNextQuestion() {
+            if (!game2Playing || game2Questions.length === 0) {
+                endGame2('Semua Pertanyaan Selesai!');
+                return;
+            }
+            
+            // Get random question
+            var randomIndex = Math.floor(Math.random() * game2Questions.length);
+            var q = game2Questions.splice(randomIndex, 1)[0];
+            
+            // Shuffle options
+            var options = shuffleArray(q.options);
+            
+            document.getElementById('game2-question').textContent = 'Alat: ' + q.alat;
+            var optionsEl = document.getElementById('game2-options');
+            optionsEl.innerHTML = '';
+            
+            for (var i = 0; i < options.length; i++) {
+                var btn = document.createElement('button');
+                btn.className = 'btn btn-outline-primary btn-sm m-1';
+                btn.textContent = options[i];
+                btn.onclick = (function(opt, correct) {
+                    return function() {
+                        if (opt === correct) {
+                            game2Score++;
+                            document.getElementById('game2-score').textContent = game2Score;
+                            document.getElementById('game2-result').innerHTML = '<span class="text-success">Benar! +1</span>';
+                        } else {
+                            game2Lives--;
+                            document.getElementById('game2-lives').textContent = game2Lives;
+                            document.getElementById('game2-result').innerHTML = '<span class="text-danger">Salah! Jawab: ' + correct + '</span>';
+                            if (game2Lives <= 0) {
+                                endGame2('Nyawa Habis!');
+                                return;
+                            }
+                        }
+                        
+                        if (game2Playing && game2Lives > 0 && game2Questions.length > 0) {
+                            setTimeout(showNextQuestion, 800);
+                        } else if (game2Questions.length === 0) {
+                            endGame2('Semua Pertanyaan Selesai!');
+                        }
+                    };
+                })(options[i], q.sparepart);
+                optionsEl.appendChild(btn);
+            }
+        }
+
+        function startGame2() {
+            if (game2Playing) return;
+            game2Playing = true;
+            game2Score = 0;
+            game2Lives = 3;
+            game2Time = 75;
+            game2Questions = shuffleArray(allQuestions);
+            
+            document.getElementById('game2-score').textContent = game2Score;
+            document.getElementById('game2-lives').textContent = game2Lives;
+            document.getElementById('game2-timer').textContent = game2Time;
+            document.getElementById('game2-result').innerHTML = '';
+            document.getElementById('game2-start-btn').disabled = true;
+            document.getElementById('game2-start-btn').textContent = 'Bermain...';
+            
+            // Start timer
+            if (game2Timer) clearInterval(game2Timer);
+            game2Timer = setInterval(function() {
+                game2Time--;
+                document.getElementById('game2-timer').textContent = game2Time;
+                if (game2Time <= 0) {
+                    endGame2('Waktu Habis!');
+                }
+            }, 1000);
+            
+            showNextQuestion();
+        }
+
+        function endGame2(reason) {
+            game2Playing = false;
+            if (game2Timer) clearInterval(game2Timer);
+            
+            document.getElementById('game2-start-btn').disabled = false;
+            document.getElementById('game2-start-btn').textContent = 'Main Lagi';
+            document.getElementById('game2-result').innerHTML = 
+                '<div class="bg-warning text-dark p-3 rounded">' +
+                '<h5>Permainan Selesai!</h5>' +
+                '<p>' + reason + '</p>' +
+                '<p>Skor Akhir: <strong>' + game2Score + '</strong> / 20</p>' +
+                '<button class="btn btn-success" onclick="startGame2()">Main Lagi</button>' +
+                '</div>';
+        }
+
+        // ==================== LAIN-LAIN ====================
+        // Visitor Counter
+        function initVisitorCounter() {
+            var visitorKey = 'temeknis_visitor_count';
+            var count = parseInt(localStorage.getItem(visitorKey)) || 0;
+            count++;
+            localStorage.setItem(visitorKey, count);
+            var el = document.getElementById('visitor-count');
+            if (el) el.textContent = count;
+        }
+
+        // Theme Toggle
+        function initThemeToggle() {
+            var toggle = document.getElementById('theme-toggle');
+            if (!toggle) return;
+            var isDark = localStorage.getItem('darkMode') === 'true';
+            function apply(dark) {
+                if (dark) {
+                    document.body.classList.add('dark-theme');
+                    toggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    toggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+                }
+            }
+            apply(isDark);
+            toggle.addEventListener('click', function() {
+                var newDark = !document.body.classList.contains('dark-theme');
+                localStorage.setItem('darkMode', newDark);
+                apply(newDark);
+            });
+        }
+
+        // Init all
+        document.addEventListener('DOMContentLoaded', function() {
+            initVisitorCounter();
+            initThemeToggle();
+            initLightbox();
+        });
+    </script>
+</body>
+</html>
+

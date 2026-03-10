@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": "admin001",
+      "username": "iqy",
+      "password": "kiky",
+      "role": "admin",
+      "email": "admin@temmekanis.com",
+      "phone": "081234567890",
+      "created_at": "2025-01-01"
+    }
+  ]
+}
+

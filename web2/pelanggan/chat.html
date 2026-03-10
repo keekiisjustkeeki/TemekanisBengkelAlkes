@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - TeMekanis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link rel="icon" href="../LOGO TMEKANIS.png" type="image/png">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.9);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .chat-container {
+            display: flex;
+            height: calc(100vh - 200px);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+        .chat-sidebar {
+            width: 350px;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-sidebar-header {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-search {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .chat-search:focus {
+            border-color: #6366f1;
+        }
+        .conversation-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .conversation-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .conversation-item:hover {
+            background: #f8f9fa;
+        }
+        .conversation-item.active {
+            background: #e9ecef;
+            border-left: 3px solid #6366f1;
+        }
+        .conversation-item.unread {
+            background: #fff;
+        }
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f5f5f5;
+        }
+        .chat-header {
+            padding: 15px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .message {
+            max-width: 70%;
+            margin-bottom: 15px;
+            clear: both;
+        }
+        .message.sent {
+            float: right;
+        }
+        .message.received {
+            float: left;
+        }
+        .message-bubble {
+            padding: 10px 15px;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+        .message.sent .message-bubble {
+            background: #6366f1;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+        .message.received .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-bottom-left-radius: 2px;
+        }
+        .message-time {
+            font-size: 11px;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+        .message.sent .message-time {
+            text-align: right;
+        }
+        .message-attachment {
+            margin-top: 10px;
+        }
+        .message-attachment img {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+        .message-attachment a {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            color: inherit;
+            text-decoration: none;
+        }
+        .chat-input {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            border-radius: 25px;
+            padding: 5px 15px;
+            border: 1px solid #ddd;
+        }
+        .chat-input-container:focus-within {
+            border-color: #6366f1;
+        }
+        .chat-input-container input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 10px;
+        }
+        .chat-input-container button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: #6366f1;
+            font-size: 20px;
+        }
+        .chat-input-container button:hover {
+            color: #4f46e5;
+        }
+        .no-chat-selected {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+        }
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .unread-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+        .file-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .back-button {
+            display: none;
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 9999;
+                border-radius: 0;
+            }
+            .chat-sidebar {
+                width: 100%;
+                display: none;
+            }
+            .chat-sidebar.mobile-show {
+                display: flex !important;
+            }
+            .chat-main {
+                display: none;
+                width: 100%;
+            }
+            .chat-main.active {
+                display: flex;
+            }
+            .chat-messages {
+                padding: 15px;
+            }
+            .message {
+                max-width: 85%;
+            }
+            .back-button {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+<!-- SIDEBAR -->
+<nav class="col-md-3 col-lg-2 d-md-block sidebar collapse show" id="sidebar">
+<div class="position-sticky pt-3">
+
+<div class="text-center mb-4">
+<img src="../LOGO TMEKANIS.png" alt="Logo" style="height: 50px; border-radius: 10px;">
+<h6 class="text-white mt-2">Pelanggan</h6>
+</div>
+
+<ul class="nav flex-column">
+
+<li class="nav-item">
+<a class="nav-link" href="beranda.html">
+<i class="bi bi-house me-2"></i>Beranda
+</a>
+</li>
+
+
+<li class="nav-item">
+<a class="nav-link active" href="chat.html">
+<i class="bi bi-chat me-2"></i>Chat
+<span class="badge bg-warning text-dark ms-2" id="unread-chat-count">0</span>
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link active" href="surat.html">
+<i class="bi bi-file-earmark-text me-2"></i>Surat Saya
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="profil.html">
+<i class="bi bi-person me-2"></i>Profil Saya
+</a>
+</li>
+
+<li class="nav-item mt-3">
+<a class="nav-link" href="#" onclick="logout()">
+<i class="bi bi-box-arrow-right me-2"></i>Keluar
+</a>
+</li>
+
+</ul>
+</div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h4 class="fw-bold"><i class="bi bi-chat me-2"></i>Chat dengan Admin</h4>
+
+<div class="d-flex align-items-center">
+<span class="me-3">Halo, <strong id="user-name"></strong></span>
+<button class="btn btn-outline-danger btn-sm" onclick="logout()">
+<i class="bi bi-box-arrow-right"></i>
+</button>
+</div>
+</div>
+
+<div id="alert-container"></div>
+
+<!-- CHAT INTERFACE -->
+<div class="chat-container">
+    <!-- Conversation List -->
+    <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+            <input type="text" class="chat-search" placeholder="Cari percakapan..." id="search-conversation" onkeyup="filterConversations()">
+        </div>
+        <div class="conversation-list" id="conversation-list">
+            <!-- Conversations will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-main" id="chat-area">
+        <div class="no-chat-selected" id="no-chat">
+            <div class="text-center">
+                <i class="bi bi-chat-dots display-1 text-muted"></i>
+                <p class="mt-3">Pilih percakapan untuk memulai chat</p>
+            </div>
+        </div>
+
+        <div id="active-chat" style="display: none; flex-direction: column; height: 100%;">
+            <div class="chat-header">
+                <button class="btn btn-sm back-button" onclick="closeChat()" title="Kembali">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <div class="avatar me-3" id="chat-avatar">A</div>
+                <div>
+                    <h6 class="mb-0" id="chat-username">Admin</h6>
+                    <small class="text-muted" id="chat-status">Online</small>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will be loaded here -->
+            </div>
+
+            <div class="chat-input">
+                <div class="file-preview mb-2" id="file-preview" style="display: none;"></div>
+                <div class="chat-input-container">
+                    <label for="chat-file-input" class="btn">
+                        <i class="bi bi-paperclip"></i>
+                    </label>
+                    <input type="file" id="chat-file-input" accept="image/*,.pdf,.doc,.docx" style="display: none;">
+                    
+                    <input type="text" id="chat-message" placeholder="Ketik pesan..." onkeypress="handleEnter(event)">
+                    
+                    <button type="button" id="emoji-btn" title="Emoji">
+                        <i class="bi bi-emoji-smile"></i>
+                    </button>
+                    
+                    <button type="button" onclick="sendChatMessage()" title="Kirim">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/chat/chat.js"></script>
+
+<script>
+let currentConversationId = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const user = getCurrentUser();
+    if (!user || user.role !== 'pelanggan') {
+        window.location.href = '../login.html';
+        return;
+    }
+    
+    document.getElementById('user-name').textContent = user.username;
+    
+    // For pelanggan, we need to create/get conversation with admin
+    ensureAdminConversation();
+    
+    loadConversations();
+    initEmojiPicker('chat-message', 'emoji-btn');
+    initFileInput('chat-file-input', 'file-preview');
+    
+    updateUnreadCount();
+    
+    // Mobile: Auto-open first conversation
+    if (window.innerWidth <= 768) {
+        const conversations = ChatSystem.getConversations();
+        if (conversations.length > 0) {
+            openConversationMobile(conversations[0].id);
+        }
+    }
+});
+
+// Mobile: Open conversation directly (full screen)
+function openConversationMobile(conversationId) {
+    currentConversationId = conversationId;
+    
+    const conversations = ChatSystem.getConversations();
+    const conversation = conversations.find(c => c.id === conversationId);
+    
+    if (!conversation) return;
+    
+    const role = conversation.otherUser ? conversation.otherUser.role : 'admin';
+    const username = role === 'admin' ? 'Admin TeMekanis' : (conversation.otherUser ? conversation.otherUser.username : 'Unknown');
+    const initial = role === 'admin' ? 'A' : username.charAt(0).toUpperCase();
+    
+    // Mobile: Show full screen chat, hide sidebar
+    document.querySelector('.chat-sidebar').style.display = 'none';
+    document.getElementById('chat-area').style.display = 'flex';
+    document.getElementById('chat-area').classList.add('mobile-active');
+    
+    document.getElementById('no-chat').style.display = 'none';
+    document.getElementById('active-chat').style.display = 'flex';
+    document.getElementById('chat-avatar').textContent = initial;
+    document.getElementById('chat-username').textContent = username;
+    
+    ChatSystem.markAsRead(conversationId);
+    loadConversations();
+    updateUnreadCount();
+    
+    loadMessages(conversationId);
+}
+
+// Mobile: Close chat and go back to conversation list
+function closeChat() {
+    currentConversationId = null;
+    document.getElementById('active-chat').style.display = 'none';
+    document.getElementById('no-chat').style.display = 'flex';
+    
+    // Mobile: Show conversation list
+    if (window.innerWidth <= 768) {
+        document.querySelector('.chat-sidebar').style.display = 'flex';
+        document.getElementById('chat-area').classList.remove('mobile-active');
+    }
+}
+
+function ensureAdminConversation() {
+    const chats = JSON.parse(localStorage.getItem('temeknis_chats') || '[]');
+    const currentUser = getCurrentUser();
+    
+    // Find admin user
+    const users = JSON.parse(localStorage.getItem('temeknis_users') || '[]');
+    const admin = users.find(u => u.role === 'admin');
+    
+    if (!admin) return;
+    
+    // Check if conversation exists
+    let conversation = chats.find(c => 
+        c.participants.includes(currentUser.id) && c.participants.includes(admin.id)
+    );
+    
+    if (!conversation) {
+        conversation = {
+            id: 'chat_' + Date.now(),
+            participants: [currentUser.id, admin.id],
+            messages: [],
+            createdAt: new Date().toISOString(),
+            lastMessageTime: new Date().toISOString()
+        };
+        chats.push(conversation);
+        localStorage.setItem('temeknis_chats', JSON.stringify(chats));
+    }
+}
+
+function loadConversations() {
+    const conversations = ChatSystem.getConversations();
+    const list = document.getElementById('conversation-list');
+    
+    if (conversations.length === 0) {
+        list.innerHTML = `
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-chat-circle display-4"></i>
+                <p class="mt-3">Belum ada percakapan</p>
+                <small>Hubungi admin untuk memulai chat</small>
+            </div>
+        `;
+        return;
+    }
+    
+    list.innerHTML = conversations.map(conv => {
+        const username = conv.otherUser ? conv.otherUser.username : 'Admin';
+        const role = conv.otherUser ? conv.otherUser.role : 'admin';
+        const displayName = role === 'admin' ? 'Admin TeMekanis' : username;
+        const lastMessage = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1].text : 'Belum ada pesan';
+        const initial = role === 'admin' ? 'A' : username.charAt(0).toUpperCase();
+        const time = conv.messages.length > 0 ? ChatSystem.formatTimestamp(conv.messages[conv.messages.length - 1].timestamp) : '';
+        
+        return `
+            <div class="conversation-item ${conv.unreadCount > 0 ? 'unread' : ''}" 
+                 onclick="openConversation('${conv.id}')">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-3">${initial}</div>
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0" style="font-size: 14px;">${displayName}</h6>
+                            <small class="text-muted">${time}</small>
+                        </div>
+                        <p class="text-muted mb-0 text-truncate" style="font-size: 13px;">${lastMessage}</p>
+                    </div>
+                    ${conv.unreadCount > 0 ? `<span class="unread-badge">${conv.unreadCount}</span>` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function openConversation(conversationId) {
+    currentConversationId = conversationId;
+    
+    const conversations = ChatSystem.getConversations();
+    const conversation = conversations.find(c => c.id === conversationId);
+    
+    if (!conversation) return;
+    
+    const role = conversation.otherUser ? conversation.otherUser.role : 'admin';
+    const username = role === 'admin' ? 'Admin TeMekanis' : (conversation.otherUser ? conversation.otherUser.username : 'Unknown');
+    const initial = role === 'admin' ? 'A' : username.charAt(0).toUpperCase();
+    
+    // Update UI
+    document.getElementById('no-chat').style.display = 'none';
+    document.getElementById('active-chat').style.display = 'flex';
+    document.getElementById('chat-avatar').textContent = initial;
+    document.getElementById('chat-username').textContent = username;
+    
+    // Mark as read
+    ChatSystem.markAsRead(conversationId);
+    loadConversations();
+    updateUnreadCount();
+    
+    // Load messages
+    loadMessages(conversationId);
+}
+
+function loadMessages(conversationId) {
+    const messages = ChatSystem.getMessages(conversationId);
+    const container = document.getElementById('chat-messages');
+    const currentUser = getCurrentUser();
+    
+    if (messages.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-muted py-5">
+                <i class="bi bi-chat-square-text display-4"></i>
+                <p class="mt-3">Belum ada pesan</p>
+                <small>Kirim pesan untuk memulai percakapan dengan admin</small>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = messages.map(msg => {
+        const isSent = msg.senderId === currentUser.id;
+        const time = new Date(msg.timestamp).toLocaleTimeString('id-ID', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        let attachmentHtml = '';
+        if (msg.attachment) {
+            if (msg.attachment.type.startsWith('image/')) {
+                attachmentHtml = `<div class="message-attachment"><img src="${msg.attachment.data}" alt="Image"></div>`;
+            } else {
+                attachmentHtml = `<div class="message-attachment"><a href="${msg.attachment.data}" download="${msg.attachment.name}"><i class="bi bi-file-earmark me-2"></i>${msg.attachment.name}</a></div>`;
+            }
+        }
+        
+        return `
+            <div class="message ${isSent ? 'sent' : 'received'}">
+                <div class="message-bubble">
+                    ${msg.text ? `<p class="mb-1">${msg.text}</p>` : ''}
+                    ${attachmentHtml}
+                    <div class="message-time">${time} ${!msg.read && isSent ? '<i class="bi bi-check"></i>' : ''}</div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        `;
+    }).join('');
+    
+    ChatSystem.scrollToBottom('chat-messages');
+}
+
+function sendChatMessage() {
+    const messageText = document.getElementById('chat-message').value.trim();
+    const fileInput = document.getElementById('chat-file-input');
+    
+    if (!messageText && !fileInput.files[0]) {
+        return;
+    }
+    
+    if (!currentConversationId) {
+        showAlert('Pilih percakapan terlebih dahulu', 'warning');
+        return;
+    }
+    
+    if (fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const attachment = {
+                name: file.name,
+                type: file.type,
+                data: e.target.result
+            };
+            
+            ChatSystem.sendMessage(currentConversationId, messageText, attachment);
+            
+            document.getElementById('chat-message').value = '';
+            fileInput.value = '';
+            document.getElementById('file-preview').style.display = 'none';
+            
+            loadMessages(currentConversationId);
+            loadConversations();
+        };
+        
+        reader.readAsDataURL(file);
+    } else {
+        ChatSystem.sendMessage(currentConversationId, messageText);
+        
+        document.getElementById('chat-message').value = '';
+        
+        loadMessages(currentConversationId);
+        loadConversations();
+    }
+}
+
+function handleEnter(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+function filterConversations() {
+    const query = document.getElementById('search-conversation').value.toLowerCase();
+    const items = document.querySelectorAll('.conversation-item');
+    
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'block' : 'none';
+    });
+}
+
+function updateUnreadCount() {
+    const conversations = ChatSystem.getConversations();
+    const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount, 0);
+    document.getElementById('unread-chat-count').textContent = totalUnread;
+}
+
+function showAlert(message, type) {
+    const container = document.getElementById('alert-container');
+    container.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show">
+            ${message}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    setTimeout(() => container.innerHTML = '', 5000);
+}
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../login.html';
+}
+</script>
+
+</body>
+</html>
+

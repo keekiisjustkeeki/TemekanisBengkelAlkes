@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Surat - Admin TeMekanis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link rel="icon" href="../LOGO TMEKANIS.png" type="image/png">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .item-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+<!-- SIDEBAR -->
+<nav class="col-md-3 col-lg-2 d-md-block sidebar collapse show" id="sidebar">
+<div class="position-sticky pt-3">
+
+<div class="text-center mb-4">
+<img src="../LOGO TMEKANIS.png" alt="Logo" style="height:50px;border-radius:10px;">
+<h6 class="text-white mt-2">Admin Panel</h6>
+</div>
+
+<ul class="nav flex-column">
+
+<li class="nav-item">
+<a class="nav-link" href="dashboard.html">
+<i class="bi bi-speedometer2 me-2"></i>Dashboard
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="galeri.html">
+<i class="bi bi-images me-2"></i>Kelola Galeri
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="kontak.html">
+<i class="bi bi-person-contact me-2"></i>Kelola Kontak
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="pengguna.html">
+<i class="bi bi-people me-2"></i>Kelola Pengguna
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="chat.html">
+<i class="bi bi-chat me-2"></i>Chat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="pengaturan-surat.html">
+<i class="bi bi-gear me-2"></i>Pengaturan Surat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link active" href="cetak-surat.html">
+<i class="bi bi-printer me-2"></i>Cetak Surat
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="arsip-surat.html">
+<i class="bi bi-archive me-2"></i>Arsip Surat
+</a>
+</li>
+
+<li class="nav-item mt-3">
+<a class="nav-link" href="#" onclick="logout()">
+<i class="bi bi-box-arrow-right me-2"></i>Keluar
+</a>
+</li>
+
+</ul>
+</div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h4 class="fw-bold" id="page-title">Cetak Surat</h4>
+
+<div class="d-flex align-items-center">
+<span class="me-3">Admin: <strong id="admin-name"></strong></span>
+
+<button class="btn btn-outline-danger btn-sm" onclick="logout()">
+<i class="bi bi-box-arrow-right"></i> Keluar
+</button>
+</div>
+</div>
+
+<div id="alert-container"></div>
+
+<!-- FORM CETAK SURAT -->
+<div class="card">
+<div class="card-header">
+<h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Buat Surat Baru</h5>
+</div>
+<div class="card-body">
+
+<form id="surat-form">
+<div class="row">
+
+<!-- Jenis Surat -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Jenis Surat</label>
+<select class="form-select" id="jenis-surat">
+<option value="SURAT PERBAIKAN">SURAT PERBAIKAN</option>
+<option value="RAB">RAB (Rencana Anggaran Biaya)</option>
+<option value="INVOICE">Invoice</option>
+</select>
+</div>
+
+<!-- Pelanggan -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Pelanggan</label>
+<select class="form-select" id="pelanggan-select">
+<option value="">-- Pilih Pelanggan --</option>
+</select>
+</div>
+
+<!-- Nama Pelanggan -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Nama Pelanggan</label>
+<input type="text" class="form-control" id="nama-pelanggan" placeholder="Nama lengkap">
+</div>
+
+<!-- Alamat -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Alamat</label>
+<input type="text" class="form-control" id="alamat" placeholder="Alamat lengkap">
+</div>
+
+<!-- Nama Pekerjaan/Jenis Layanan -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Nama Pekerjaan</label>
+<input type="text" class="form-control" id="jenis-layanan" placeholder="Contoh: Perbaikan Dental Unit & Scaler">
+</div>
+
+<!-- Teknisi -->
+<div class="col-md-6 mb-3">
+<label class="form-label">Teknisi</label>
+<select class="form-select" id="teknisi-select">
+<option value="">-- Pilih Teknisi --</option>
+</select>
+</div>
+
+<!-- Deskripsi Perbaikan -->
+<div class="col-md-12 mb-3">
+<label class="form-label">Deskripsi Kerusakan</label>
+<textarea class="form-control" id="deskripsi" rows="2" placeholder="Contoh: Kerusakan pada aliran air dan udara, handpiece, knop scaler, & switch"></textarea>
+</div>
+
+</div>
+
+<!-- Items / Spareparts -->
+<div class="mb-3">
+<label class="form-label">Daftar Sparepart</label>
+<div id="items-container">
+</div>
+<button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addItem()">
+<i class="bi bi-plus-lg me-1"></i> Tambah Sparepart
+</button>
+</div>
+
+<!-- Jasa Service -->
+<div class="row mb-3">
+<div class="col-md-8">
+<label class="form-label">Jasa Service/Setting/Adjustment</label>
+<input type="text" class="form-control" id="jasa-service" placeholder="Contoh: Jasa Service, Setting & Adjustment">
+</div>
+<div class="col-md-4">
+<label class="form-label">Harga Jasa (Rp)</label>
+<input type="number" class="form-control" id="jasa-service-harga" placeholder="0" value="0">
+</div>
+</div>
+
+<!-- Total -->
+<div class="row">
+<div class="col-md-12">
+<div class="alert alert-info">
+<h5>Total: <span id="total-harga">Rp 0</span></h5>
+</div>
+</div>
+</div>
+
+<button type="submit" class="btn btn-success">
+<i class="bi bi-printer me-2"></i>Buat Surat
+</button>
+
+</form>
+
+</div>
+</div>
+
+<!-- MODAL HASIL SURAT -->
+<div class="modal fade" id="suratResultModal" tabindex="-1" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Surat Berhasil Dibuat</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="text-center mb-4">
+<h4 id="result-nomor"></h4>
+<p class="text-muted" id="result-pelanggan"></p>
+</div>
+
+<div class="d-flex justify-content-center gap-3 flex-wrap">
+<button class="btn btn-primary btn-lg" onclick="kirimSurat()">
+<i class="bi bi-send me-2"></i>Kirim ke Pelanggan
+</button>
+<button class="btn btn-success btn-lg" onclick="downloadSuratPDF()">
+<i class="bi bi-file-earmark-pdf me-2"></i>Download PDF
+</button>
+<button class="btn btn-outline-secondary btn-lg" onclick="printSuratPreview()">
+<i class="bi bi-printer me-2"></i>Cetak/Preview
+</button>
+<button class="btn btn-secondary btn-lg" onclick="arsipkanSurat()">
+<i class="bi bi-archive me-2"></i>Arsipkan
+</button>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+</div>
+</div>
+</div>
+</div>
+
+</main>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/surat/surat.js"></script>
+
+<script>
+let items = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const user = getCurrentUser();
+    if (!user || user.role !== 'admin') {
+        window.location.href = '../login.html';
+        return;
+    }
+    document.getElementById('admin-name').textContent = user.username;
+    
+    loadPelanggan();
+    loadTeknisi();
+    addItem();
+});
+
+function loadPelanggan() {
+    const users = JSON.parse(localStorage.getItem('temeknis_users') || '[]');
+    const pelanggan = users.filter(u => u.role === 'pelanggan');
+    const select = document.getElementById('pelanggan-select');
+    
+    select.innerHTML = '<option value="">-- Pilih Pelanggan --</option>' + 
+        pelanggan.map(u => `<option value="${u.id}" data-nama="${u.username}" data-alamat="${u.phone || '-'}">${u.username}</option>`).join('');
+    
+    select.addEventListener('change', function() {
+        const option = select.options[select.selectedIndex];
+        if (option.value) {
+            document.getElementById('nama-pelanggan').value = option.dataset.nama;
+            document.getElementById('alamat').value = option.dataset.alamat;
+        }
+    });
+}
+
+function loadTeknisi() {
+    const teknisi = JSON.parse(localStorage.getItem('temeknis_teknisi') || '[]');
+    const select = document.getElementById('teknisi-select');
+    
+    select.innerHTML = '<option value="">-- Pilih Teknisi --</option>' + 
+        teknisi.map(t => `<option value="${t.nama}">${t.nama} (${t.spesialis || '-'})</option>`).join('');
+}
+
+function addItem() {
+    const container = document.getElementById('items-container');
+    const index = items.length;
+    
+    items.push({ nama: '', kondisi: 'Baru', tindakan: 'Pemasangan', jumlah: 1, harga: 0 });
+    
+    const itemHtml = `
+        <div class="item-card" id="item-${index}">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <input type="text" class="form-control" placeholder="Nama Sparepart" 
+                        value="${items[index].nama}"
+                        onchange="updateItem(${index}, 'nama', this.value)">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <select class="form-select" onchange="updateItem(${index}, 'kondisi', this.value)">
+                        <option value="Baru" ${items[index].kondisi === 'Baru' ? 'selected' : ''}>Baru</option>
+                        <option value="Tidak Layak" ${items[index].kondisi === 'Tidak Layak' ? 'selected' : ''}>Tidak Layak</option>
+                        <option value="Rusak" ${items[index].kondisi === 'Rusak' ? 'selected' : ''}>Rusak</option>
+                        <option value="OK" ${items[index].kondisi === 'OK' ? 'selected' : ''}>OK</option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-2">
+                    <select class="form-select" onchange="updateItem(${index}, 'tindakan', this.value)">
+                        <option value="Pemasangan" ${items[index].tindakan === 'Pemasangan' ? 'selected' : ''}>Pemasangan</option>
+                        <option value="Pergantian" ${items[index].tindakan === 'Pergantian' ? 'selected' : ''}>Pergantian</option>
+                        <option value="Perbaikan" ${items[index].tindakan === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
+                        <option value="Maintenance" ${items[index].tindakan === 'Maintenance' ? 'selected' : ''}>Maintenance</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-2">
+                    <input type="number" class="form-control" placeholder="Qty" value="${items[index].jumlah}" min="1"
+                        onchange="updateItem(${index}, 'jumlah', parseInt(this.value))">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <input type="number" class="form-control" placeholder="Harga" value="${items[index].harga}"
+                        onchange="updateItem(${index}, 'harga', parseInt(this.value))">
+                </div>
+                <div class="col-md-1 mb-2">
+                    <button type="button" class="btn btn-danger w-100" onclick="removeItem(${index})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', itemHtml);
+}
+
+function updateItem(index, field, value) {
+    items[index][field] = value;
+    calculateTotal();
+}
+
+function removeItem(index) {
+    items.splice(index, 1);
+    renderItems();
+    calculateTotal();
+}
+
+function renderItems() {
+    const container = document.getElementById('items-container');
+    container.innerHTML = '';
+    
+    items.forEach((item, index) => {
+        const itemHtml = `
+            <div class="item-card" id="item-${index}">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <input type="text" class="form-control" placeholder="Nama Sparepart" 
+                            value="${item.nama}"
+                            onchange="updateItem(${index}, 'nama', this.value)">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" onchange="updateItem(${index}, 'kondisi', this.value)">
+                            <option value="Baru" ${item.kondisi === 'Baru' ? 'selected' : ''}>Baru</option>
+                            <option value="Tidak Layak" ${item.kondisi === 'Tidak Layak' ? 'selected' : ''}>Tidak Layak</option>
+                            <option value="Rusak" ${item.kondisi === 'Rusak' ? 'selected' : ''}>Rusak</option>
+                            <option value="OK" ${item.kondisi === 'OK' ? 'selected' : ''}>OK</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" onchange="updateItem(${index}, 'tindakan', this.value)">
+                            <option value="Pemasangan" ${item.tindakan === 'Pemasangan' ? 'selected' : ''}>Pemasangan</option>
+                            <option value="Pergantian" ${item.tindakan === 'Pergantian' ? 'selected' : ''}>Pergantian</option>
+                            <option value="Perbaikan" ${item.tindakan === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
+                            <option value="Maintenance" ${item.tindakan === 'Maintenance' ? 'selected' : ''}>Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <input type="number" class="form-control" placeholder="Qty" value="${item.jumlah}" min="1"
+                            onchange="updateItem(${index}, 'jumlah', parseInt(this.value))">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <input type="number" class="form-control" placeholder="Harga" value="${item.harga}"
+                            onchange="updateItem(${index}, 'harga', parseInt(this.value))">
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <button type="button" class="btn btn-danger w-100" onclick="removeItem(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', itemHtml);
+    });
+}
+
+function calculateTotal() {
+    let total = 0;
+    items.forEach(item => {
+        total += (item.jumlah || 0) * (item.harga || 0);
+    });
+    
+    // Add jasa service
+    const jasaServiceHarga = parseInt(document.getElementById('jasa-service-harga').value) || 0;
+    total += jasaServiceHarga;
+    
+    document.getElementById('total-harga').textContent = formatRupiah(total);
+    return total;
+}
+
+// Listen for jasa service price change
+document.getElementById('jasa-service-harga').addEventListener('input', calculateTotal);
+
+let currentSurat = null;
+
+document.getElementById('surat-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const jenis = document.getElementById('jenis-surat').value;
+    const namaPelanggan = document.getElementById('nama-pelanggan').value;
+    const alamat = document.getElementById('alamat').value;
+    const jenisLayanan = document.getElementById('jenis-layanan').value;
+    const teknisi = document.getElementById('teknisi-select').value;
+    const deskripsi = document.getElementById('deskripsi').value;
+    const jasaService = document.getElementById('jasa-service').value;
+    const jasaServiceHarga = parseInt(document.getElementById('jasa-service-harga').value) || 0;
+    
+    if (!namaPelanggan) {
+        showAlert('Nama pelanggan wajib diisi!', 'warning');
+        return;
+    }
+    
+    // Filter empty items - hanya perlu nama ada, harga boleh 0
+    const validItems = items.filter(i => i.nama && i.nama.trim() !== '');
+    
+    const currentUser = getCurrentUser();
+    const pelangganSelect = document.getElementById('pelanggan-select');
+    
+    const surat = {
+        id: 'surat' + Date.now(),
+        nomor: generateNomorSurat(jenis),
+        jenis: jenis,
+        pelanggan_id: pelangganSelect.value || null,
+        nama_pelanggan: namaPelanggan,
+        alamat: alamat,
+        jenis_layanan: jenisLayanan,
+        teknisi: teknisi,
+        desripsi: deskripsi,
+        items: JSON.stringify(validItems),
+        jasa_service: jasaService,
+        jasa_service_harga: jasaServiceHarga,
+        total: calculateTotal(),
+        created_at: new Date().toISOString(),
+        created_by: currentUser.username,
+        status: 'draft'
+    };
+    
+    saveSurat(surat);
+    currentSurat = surat;
+    
+    document.getElementById('result-nomor').textContent = surat.nomor;
+    document.getElementById('result-pelanggan').textContent = 'Pelanggan: ' + surat.nama_pelanggan;
+    
+    const modal = new bootstrap.Modal(document.getElementById('suratResultModal'));
+    modal.show();
+    
+    document.getElementById('surat-form').reset();
+    items = [];
+    addItem();
+    calculateTotal();
+});
+
+function kirimSurat() {
+    if (!currentSurat) return;
+    
+    const pelangganId = currentSurat.pelanggan_id;
+    
+    if (!pelangganId) {
+        showAlert('Pelanggan tidak memiliki akun! Silakan gunakan Download PDF untuk pelanggan ini.', 'warning');
+        return;
+    }
+    
+    const surats = getAllSurats();
+    const index = surats.findIndex(s => s.id === currentSurat.id);
+    if (index !== -1) {
+        surats[index].status = 'dikirim';
+        surats[index].dikirim_tanggal = new Date().toISOString();
+        localStorage.setItem('temeknis_surats', JSON.stringify(surats));
+    }
+    
+    const notifikasi = {
+        id: 'notif' + Date.now(),
+        user_id: pelangganId,
+        jenis: 'surat',
+        surat_id: currentSurat.id,
+        nomor: currentSurat.nomor,
+        pesan: 'Anda menerima surat baru: ' + currentSurat.jenis + ' ' + currentSurat.nomor,
+        created_at: new Date().toISOString(),
+        dibaca: false
+    };
+    
+    const notifikasis = JSON.parse(localStorage.getItem('temeknis_notifikasi') || '[]');
+    notifikasis.push(notifikasi);
+    localStorage.setItem('temeknis_notifikasi', JSON.stringify(notifikasis));
+    
+    showAlert('Surat berhasil dikirim ke pelanggan!', 'success');
+    bootstrap.Modal.getInstance(document.getElementById('suratResultModal')).hide();
+    currentSurat = null;
+}
+
+async function downloadSuratPDF() {
+    if (!currentSurat) return;
+    
+    showAlert('Membuat PDF...', 'info');
+    
+    try {
+        const kop = getKopSurat();
+        const pdfBlob = await generateSuratPDF(currentSurat, kop);
+        
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = currentSurat.nomor + '.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showAlert('PDF berhasil didownload!', 'success');
+        
+        const surats = getAllSurats();
+        const idx = surats.findIndex(s => s.id === currentSurat.id);
+        if (idx !== -1) {
+            surats[idx].status = 'diarsipkan';
+            surats[idx].diarsipkan_tanggal = new Date().toISOString();
+            localStorage.setItem('temeknis_surats', JSON.stringify(surats));
+        }
+        
+        bootstrap.Modal.getInstance(document.getElementById('suratResultModal')).hide();
+        currentSurat = null;
+    } catch(e) {
+        console.error('PDF error:', e);
+        showAlert('Gagal membuat PDF, menggunakan HTML instead', 'warning');
+        printSuratPreview();
+    }
+}
+
+function printSuratPreview() {
+    if (!currentSurat) return;
+    
+    const kop = getKopSurat();
+    const layout = getLayoutSettings();
+    const html = generateSuratHTML(currentSurat, kop, layout);
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.print();
+    
+    const surats = getAllSurats();
+    const idx = surats.findIndex(s => s.id === currentSurat.id);
+    if (idx !== -1) {
+        surats[idx].status = 'diarsipkan';
+        surats[idx].diarsipkan_tanggal = new Date().toISOString();
+        localStorage.setItem('temeknis_surats', JSON.stringify(surats));
+    }
+    
+    showAlert('Surat dibuka di tab baru untuk dicetak!', 'success');
+}
+
+function arsipkanSurat() {
+    if (!currentSurat) return;
+    
+    const surats = getAllSurats();
+    const index = surats.findIndex(s => s.id === currentSurat.id);
+    if (index !== -1) {
+        surats[index].status = 'diarsipkan';
+        surats[index].diarsipkan_tanggal = new Date().toISOString();
+        localStorage.setItem('temeknis_surats', JSON.stringify(surats));
+    }
+    
+    showAlert('Surat berhasil diarsipkan!', 'success');
+    bootstrap.Modal.getInstance(document.getElementById('suratResultModal')).hide();
+    currentSurat = null;
+}
+
+function showAlert(message, type) {
+    document.getElementById('alert-container').innerHTML = 
+        `<div class="alert alert-${type} alert-dismissible fade show">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>`;
+    setTimeout(() => {
+        document.getElementById('alert-container').innerHTML = '';
+    }, 5000);
+}
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../login.html';
+}
+</script>
+
+</body>
+</html>
+
